@@ -1,4 +1,10 @@
 
+## Clone repo to directory on JASMIN
+
+```bash
+git clone <repo-name>
+```
+
 ## Install dependencies
 
 Install [uv](https://docs.astral.sh/uv/) to handle virtual environment:
