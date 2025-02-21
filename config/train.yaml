@@ -1,0 +1,26 @@
+defaults:
+  - _self_
+  - hydra: default
+  - wandb: default
+  - override hydra/launcher: slurm
+
+name: test
+
+seed: 0
+device: cuda
+log_freq: 100
+
+# Optimization process
+epochs: 10
+learning_rate: 0.001
+
+batch_size: 32
+dataloader_workers: 7
+
+# data paths
+camera_a_images: /gws/nopw/j04/iecdt/computer-vision-data/cam_a/imgs
+camera_b_images: /gws/nopw/j04/iecdt/computer-vision-data/cam_b/imgs
+ground_truth_labels: /gws/nopw/j04/iecdt/computer-vision-data/cloudnet-vertical-profile-data
+camera_a_calibration: /gws/nopw/j04/iecdt/computer-vision-data/fisheye_calib_A.yml
+camera_b_calibration: /gws/nopw/j04/iecdt/computer-vision-data/fisheye_calib_B.yml
+camera_relative_positions: /gws/nopw/j04/iecdt/computer-vision-data/T_rel.txt
