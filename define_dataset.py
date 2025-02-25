@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import cv2
 from torch.utils.data import Dataset
+from torch.nn.functional import one_hot
+import torch
 
 class CloudDataset(Dataset):
     def __init__(self, annotations_file, img_dir, transform, target_transform=None):
@@ -14,7 +16,7 @@ class CloudDataset(Dataset):
         return len(self.img_labels)
 
     def __getitem__(self, idx: int):
-        img_path = self.img_dir / f'{self.img_labels.columns[1]}.png'
+        img_path = self.img_dir / f'{self.img_labels.columns[idx]}.png'
         image = cv2.imread(img_path)
         label = self.img_labels.iloc[:, idx]
         if self.transform:
@@ -23,7 +25,13 @@ class CloudDataset(Dataset):
             label = self.target_transform(label)
         return image, label
     
-
 def target_transform(target):
-    """Convert target from pd.Series to 2D np.ndarray"""
-    return target.values[:, np.newaxis]
+    """Convert target from pd.Series to torch tensor"""
+    target_arr = torch.from_numpy(target.values)
+    # need float if using binary cross entropy loss, change this if we move to multi-class
+    return target_arr.to(torch.float)
+
+def target_transform_one_hot(target):
+    """Convert target from pd.Series to one hot encoding of torch tensor"""
+    target_arr = torch.from_numpy(target.values)
+    return one_hot(target_arr, 2)

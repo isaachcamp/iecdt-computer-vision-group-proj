@@ -17,6 +17,9 @@ learning_rate: 0.001
 batch_size: 32
 dataloader_workers: 7
 
+# model output
+output_size = 459
+
 # data paths
 camera_a_images: /gws/nopw/j04/iecdt/computer-vision-data/cam_a/imgs
 camera_b_images: /gws/nopw/j04/iecdt/computer-vision-data/cam_b/imgs
